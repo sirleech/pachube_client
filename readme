@@ -7,6 +7,10 @@ You will need
 Arduino Uno (with Optiboot bootloader)
 Freetronics Ethernet Shield
 
+Reset Pin
+> int resetPin = 9; //reset pin to manually reset the ethernet shield
+Jumper is added to Pin 9 to the WIZ_RST pad of the Ethernet Shield
+
 software note:
 **************
 You will need the EthernetDHCP library from:

@@ -1,22 +1,3 @@
-/*
-this example for fully function (official)ethernet code for arduino & pachube. 
-including the use of DHCP library, Watchdog timer & manually reset the shield.
-
-hardware note: 
-**************
-You will need Arduino Uno
-Freetronics Ethernet Shield
-
-software note:
-**************
-You will need the EthernetDHCP library from:
-http://gkaindl.com/software/arduino-ethernet/dhcp/
-
-library note: 
-Special thanks to Jordan Terrell(http://blog.jordanterrell.com/) and Georg Kaindl(http://gkaindl.com) for DHCP library
-
-
-*/
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetDHCP.h>
@@ -26,9 +7,9 @@ Special thanks to Jordan Terrell(http://blog.jordanterrell.com/) and Georg Kaind
 
 
 #define ID             1    //incase you have more than 1 unit on same network, just change the unit ID to other number
-#define REMOTEFEED     2654 //remote feed number here, this has to be your own feed
-#define LOCALFEED      2282 //local feed number here
-#define APIKEY         "YOUR_PACHUBE_API_KEY_HERE" // replace your pachube api key here
+#define REMOTEFEED     8281 //remote feed number here, this has to be your own feed
+#define LOCALFEED      8281 //local feed number here
+#define APIKEY         "5df9aa3f6623b1958a43632ea16397046f0affd89393649257a3039e6f854b6a" // replace your pachube api key here
 
 
 
@@ -37,7 +18,7 @@ byte mac[] = {
 
 
 byte server [] = {  //www.pachube.com
-  209, 40, 205, 190
+  173, 203, 98, 29
 };
 
 
@@ -72,7 +53,7 @@ int analog2 = 0;
 int analog3 = 0;
 
 //define analog pins for sensors
-int analogPin1 = 1;    
+int analogPin1 = 0;    
 int analogPin2 = 2;
 int analogPin3 = 5;
 

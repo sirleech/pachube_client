@@ -3,7 +3,8 @@ including the use of DHCP library, Watchdog timer & manually reset the shield.
 
 hardware note: 
 **************
-You will need Arduino Uno
+You will need 
+Arduino Uno (with Optiboot bootloader)
 Freetronics Ethernet Shield
 
 software note:

@@ -1,0 +1,15 @@
+this example for fully function (official)ethernet code for arduino & pachube. 
+including the use of DHCP library, Watchdog timer & manually reset the shield.
+
+hardware note: 
+**************
+You will need Arduino Uno
+Freetronics Ethernet Shield
+
+software note:
+**************
+You will need the EthernetDHCP library from:
+http://gkaindl.com/software/arduino-ethernet/dhcp/
+
+library note: 
+Special thanks to Jordan Terrell(http://blog.jordanterrell.com/) and Georg Kaindl(http://gkaindl.com) for DHCP library

@@ -1,7 +1,7 @@
-this example for fully function (official)ethernet code for arduino & pachube. 
-including the use of DHCP library, Watchdog timer & manually reset the shield.
+An Arduino Ethernet datalogger sending a feed to Pachube.com. The internal watchdog timer is used along with a hard reset to the Ethernet Shield from digital pin 9. Original code is forked from the article:
+http://community.pachube.com/arduino/ethernet/watchdog
 
-hardware note: 
+Hardware note: 
 **************
 You will need 
 Arduino Uno (with Optiboot bootloader)
@@ -9,9 +9,9 @@ Freetronics Ethernet Shield
 
 Reset Pin
 > int resetPin = 9; //reset pin to manually reset the ethernet shield
-Jumper is added to Pin 9 to the WIZ_RST pad of the Ethernet Shield
+Jumper is added to Pin 9 and soldered to the WIZ_RST pad of the Ethernet Shield
 
-software note:
+Software note:
 **************
 You will need the EthernetDHCP library from:
 http://gkaindl.com/software/arduino-ethernet/dhcp/

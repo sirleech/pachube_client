@@ -9,9 +9,7 @@
 #define ID             1    //incase you have more than 1 unit on same network, just change the unit ID to other number
 #define REMOTEFEED     8281 //remote feed number here, this has to be your own feed
 #define LOCALFEED      8281 //local feed number here
-#define APIKEY         "5df9aa3f6623b1958a43632ea16397046f0affd89393649257a3039e6f854b6a" // replace your pachube api key here
-
-
+#define APIKEY         "YOUR_API_KEY" // replace your pachube api key here
 
 byte mac[] = { 
   0xDA, 0xAD, 0xCA, 0xEF, 0xFE,  byte(ID) };
@@ -20,7 +18,6 @@ byte mac[] = {
 byte server [] = {  //www.pachube.com
   173, 203, 98, 29
 };
-
 
 boolean ipAcquired = false;
 boolean connectedd = false;
@@ -63,7 +60,7 @@ int resetPin = 9; //reset pin to manually reset the ethernet shield
 // variable to store the value coming from the sensor
 int remote1 = 0; 
 int remote2 = 0;
-int remote3 = 3;
+int remote3 = 0;
 
 void setup(){
   MCUSR=0;

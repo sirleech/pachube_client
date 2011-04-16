@@ -1,7 +1,7 @@
 void updateLocalSensor(){ 
   
   //define the local sensors here
-  analog1 = analogRead(analogPin1);
+  analog0 = analogRead(analogPin0);
   analog2 = analogRead(analogPin2);
   analog3 = analogRead(analogPin3);  
  
@@ -28,12 +28,20 @@ void useEthernet(){
   if(result == 1){
     ipAcquired = true;
     Serial.println("ip acquired...");
+    // Log attempts of a connection if the IP address is obtained
+    attempts++;
+  }
+  
+  //Reset the MAC address if the attempts is more than 5
+  if (attempts >= 5) {
+    TrueRandom.mac(mac);
   }
 
   if (client.connect()) {
-
+    //Successful connection so reset attempts
+    attempts = 0;
     Serial.println("connected");
-    int content_length = length(analog1) + length(analog2) + length(analog3) + 2 ; 
+    int content_length = length(analog0) + length(analog2) + length(analog3) + 2 ; 
     //this line is to count the lenght of the content = lenght of each local sensor data + ","
     //in this case we have 3 data so we will need 2 commas 
 
@@ -59,7 +67,7 @@ void useEthernet(){
     client.println("Connection: close");
     client.println();
 
-    client.print(analog1); //modify local sensors here
+    client.print(analog0); //modify local sensors here
     client.print(",");
     client.print(analog2);
     client.print(",");

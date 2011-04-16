@@ -12,8 +12,7 @@ void useEthernet(){
   digitalWrite(resetPin,LOW); // put reset pin to low ==> reset the ethernet shield
   delay(200);
   digitalWrite(resetPin,HIGH); // set it back to high
-  delay(2000);                 
-
+  delay(2000);           
 
   wdt_reset();
   Serial.println("wdt reset");
@@ -22,19 +21,21 @@ void useEthernet(){
   wdt_reset();
   Serial.println("wdt reset");
   Serial.println("got result...");
-  Serial.println(result);
-
-
+  Serial.println(result);  
+  
   if(result == 1){
     ipAcquired = true;
     Serial.println("ip acquired...");
-    // Log attempts of a connection if the IP address is obtained
+    // Log attempts
     attempts++;
+    Serial.print("attempts=");
+    Serial.println(attempts);
   }
   
   //Reset the MAC address if the attempts is more than 5
   if (attempts >= 5) {
-    TrueRandom.mac(mac);
+    //TrueRandom.mac(mac);
+    //Serial.println("Randomised MAC Address");
   }
 
   if (client.connect()) {
@@ -168,7 +169,7 @@ void checkForResponse(){
       found_CSV = true;
 
       Serial.print("\nsuccessful updates=");
-      Serial.println(++successes);
+      Serial.println(successes);
 
       found_status_200 = false;
       found_session_id = false;

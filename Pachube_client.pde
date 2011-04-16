@@ -4,7 +4,7 @@
 #include <avr/io.h>
 #include <avr/wdt.h>
 #include <string.h>
-#include <TrueRandom.h>
+//#include <TrueRandom.h>
 
 
 #define ID             2    //incase you have more than 1 unit on same network, just change the unit ID to other number
@@ -12,7 +12,8 @@
 #define LOCALFEED      8281 //local feed number here
 #define APIKEY         "APIKEY" // replace your pachube api key here
 
-byte mac[6];
+//byte mac[6];
+byte mac[] = { 0xDA, 0xAD, 0xCA, 0xEF, 0xFE,  byte(ID) };
 
 byte server [] = {  //www.pachube.com
   173, 203, 98, 29
@@ -68,11 +69,10 @@ void setup(){
   pinMode(resetPin,OUTPUT);
   Serial.begin(9600);
   Serial.println("restarted");
-  TrueRandom.mac(mac);
+  //TrueRandom.mac(mac);
 }
 
 void loop(){
-
   // Watch Dog Timer will reset the arduino if it doesn't get "wdt_reset();" every 8 sec
   if ((millis() - previousWdtMillis) > wdtInterval) {
     previousWdtMillis = millis();
@@ -84,11 +84,11 @@ void loop(){
   //main function is here, at the moment it will only connect to pachube every 10 sec
   if ((millis() - previousEthernetMillis) > ethernetInterval) {
     previousEthernetMillis = millis();
-    ethernetInterval = 10000; //10 sec
+    ethernetInterval = 5000; //5 sec
     wdt_reset();
     Serial.println("wdt reset");
     updateLocalSensor();
-    useEthernet();
+    useEthernet();    
   }
 
 

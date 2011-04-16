@@ -13,11 +13,18 @@ Jumper is added to Pin 9 and soldered to the WIZ_RST pad of the Ethernet Shield
 
 Software note:
 **************
-You will need the EthernetDHCP library from:
-http://gkaindl.com/software/arduino-ethernet/dhcp/
 
 - Arduino IDE 0021
-- EthernetDHCP Version 1.0b4
+- EthernetDHCP.h Library 1.0b4
+  -- http://gkaindl.com/software/arduino-ethernet/dhcp/
+  -- or https://github.com/sirleech/ArduinoEthernetDHCP_1.0b4
+- TrueRandom.h Library
+  -- http://code.google.com/p/tinkerit/wiki/TrueRandom
+  -- or https://github.com/sirleech/TrueRandom
+ 
 
-library note: 
-Special thanks to Jordan Terrell(http://blog.jordanterrell.com/) and Georg Kaindl(http://gkaindl.com) for DHCP library
+Libraries note: 
+--------------
+Special thanks to:
+Jordan Terrell(http://blog.jordanterrell.com/) and Georg Kaindl(http://gkaindl.com) for DHCP library
+Tinker.it http://code.google.com/p/tinkerit/wiki/TrueRandom

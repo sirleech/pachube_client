@@ -26,21 +26,9 @@ void useEthernet(){
   if(result == 1){
     ipAcquired = true;
     Serial.println("ip acquired...");
-    // Log attempts
-    attempts++;
-    Serial.print("attempts=");
-    Serial.println(attempts);
-  }
-  
-  //Reset the MAC address if the attempts is more than 5
-  if (attempts >= 5) {
-    //TrueRandom.mac(mac);
-    //Serial.println("Randomised MAC Address");
   }
 
   if (client.connect()) {
-    //Successful connection so reset attempts
-    attempts = 0;
     Serial.println("connected");
     int content_length = length(analog0) + length(analog2) + length(analog3) + 2 ; 
     //this line is to count the lenght of the content = lenght of each local sensor data + ","

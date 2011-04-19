@@ -7,7 +7,7 @@ You will need
 Arduino Uno (with Optiboot bootloader)
 Freetronics Ethernet Shield
 
-Reset Pin
+Optional Hardware Mod:
 > int resetPin = 9; //reset pin to manually reset the ethernet shield
 Jumper is added to Pin 9 and soldered to the WIZ_RST pad of the Ethernet Shield
 
@@ -15,11 +15,12 @@ Software note:
 **************
 
 - Arduino IDE 0021
+
+Optional Libraries:
 - EthernetDHCP.h Library 1.0b4
   -- http://gkaindl.com/software/arduino-ethernet/dhcp/
   -- or https://github.com/sirleech/ArduinoEthernetDHCP_1.0b4
   
-optional for random MAC address
 - TrueRandom.h Library
   -- http://code.google.com/p/tinkerit/wiki/TrueRandom
   -- or https://github.com/sirleech/TrueRandom

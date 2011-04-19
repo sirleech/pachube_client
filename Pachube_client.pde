@@ -1,6 +1,6 @@
 #include <SPI.h>
 #include <Ethernet.h>
-#include <EthernetDHCP.h>
+//#include <EthernetDHCP.h>
 #include <avr/io.h>
 #include <avr/wdt.h>
 #include <string.h>
@@ -10,10 +10,16 @@
 #define ID             3    //incase you have more than 1 unit on same network, just change the unit ID to other number
 #define REMOTEFEED     8281 //remote feed number here, this has to be your own feed
 #define LOCALFEED      8281 //local feed number here
-#define APIKEY         "APIKEYHERE" // replace your pachube api key here
+#define APIKEY         "APIKEY" // replace your pachube api key here
 
-//byte mac[6];
-byte mac[] = { 0xDA, 0xAD, 0xCA, 0xEF, 0xFE,  byte(ID) };
+//An unused IP address as found in the DHCP table
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+byte ip[] = { 192, 168, 1, 21 };
+
+//gateway = router ip,gateway
+//subnet  = netmask
+byte gateway[] = { 192, 168, 1, 254 }; 
+byte subnet[] = { 255, 255, 255, 0 }; 
 
 byte server [] = {  //www.pachube.com
   173, 203, 98, 29
@@ -22,7 +28,7 @@ byte server [] = {  //www.pachube.com
 boolean ipAcquired = false;
 boolean connectedd = false;
 boolean reading = false;
-#define REMOTE_FEED_DATASTREAMS    27 //define how many of maximun data from remote feed
+#define REMOTE_FEED_DATASTREAMS    1 //define how many of maximun data from remote feed
 float remoteSensor[REMOTE_FEED_DATASTREAMS];   
 char pachube_data[80];
 char buff[64];
@@ -83,7 +89,7 @@ void loop(){
   //main function is here, at the moment it will only connect to pachube every 10 sec
   if ((millis() - previousEthernetMillis) > ethernetInterval) {
     previousEthernetMillis = millis();
-    ethernetInterval = 5000; //5 sec
+    ethernetInterval = 10000; //10secs
     wdt_reset();
     Serial.println("wdt reset");
     updateLocalSensor();
@@ -97,36 +103,3 @@ void loop(){
     } 
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

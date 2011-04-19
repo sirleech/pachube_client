@@ -4,16 +4,16 @@
 #include <avr/io.h>
 #include <avr/wdt.h>
 #include <string.h>
-#include <TrueRandom.h>
+//#include <TrueRandom.h>
 
 
-#define ID             1    //incase you have more than 1 unit on same network, just change the unit ID to other number
+#define ID             3    //incase you have more than 1 unit on same network, just change the unit ID to other number
 #define REMOTEFEED     8281 //remote feed number here, this has to be your own feed
 #define LOCALFEED      8281 //local feed number here
-#define APIKEY         "YOURKEY" // replace your pachube api key here
+#define APIKEY         "APIKEYHERE" // replace your pachube api key here
 
-byte mac[6];
-//byte mac[] = { 0xDA, 0xAD, 0xCA, 0xEF, 0xFE,  byte(ID) };
+//byte mac[6];
+byte mac[] = { 0xDA, 0xAD, 0xCA, 0xEF, 0xFE,  byte(ID) };
 
 byte server [] = {  //www.pachube.com
   173, 203, 98, 29
@@ -68,7 +68,7 @@ void setup(){
   pinMode(resetPin,OUTPUT);
   Serial.begin(9600);
   Serial.println("restarted");
-  TrueRandom.mac(mac);
+  //TrueRandom.mac(mac);
 }
 
 void loop(){

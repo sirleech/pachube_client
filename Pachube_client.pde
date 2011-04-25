@@ -1,25 +1,25 @@
 #include <SPI.h>
 #include <Ethernet.h>
-//#include <EthernetDHCP.h>
+#include <EthernetDHCP.h>
 #include <avr/io.h>
 #include <avr/wdt.h>
 #include <string.h>
 //#include <TrueRandom.h>
 
-
-#define ID             3    //incase you have more than 1 unit on same network, just change the unit ID to other number
+#define ID             2    //incase you have more than 1 unit on same network, just change the unit ID to other number
 #define REMOTEFEED     8281 //remote feed number here, this has to be your own feed
 #define LOCALFEED      8281 //local feed number here
-#define APIKEY         "APIKEY" // replace your pachube api key here
+#define APIKEY         "YOURKEY" // replace your pachube api key here
 
-//An unused IP address as found in the DHCP table
+//An IP address outside the DHCP range
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-byte ip[] = { 192, 168, 1, 21 };
+//byte ip[] = { 192, 168, 1, 22 };
+//byte ip[] = { 192, 168, 1, 20 };
 
 //gateway = router ip,gateway
 //subnet  = netmask
-byte gateway[] = { 192, 168, 1, 254 }; 
-byte subnet[] = { 255, 255, 255, 0 }; 
+//byte gateway[] = { 192, 168, 1, 254 }; 
+//byte subnet[] = { 255, 255, 255, 0 }; 
 
 byte server [] = {  //www.pachube.com
   173, 203, 98, 29
@@ -73,29 +73,36 @@ void setup(){
   wdt_enable(WDTO_8S); // setup Watch Dog Timer to 8 sec
   pinMode(resetPin,OUTPUT);
   Serial.begin(9600);
-  Serial.println("restarted");
+  //Ethernet.begin(mac, ip, gateway, subnet);
+  Serial.println("Setup...");
   //TrueRandom.mac(mac);
+  Serial.println("Ethernet Begin...");
+  int result = EthernetDHCP.begin(mac); 
+  if(result == 1){
+    ipAcquired = true;
+    Serial.println("ip acquired...");
+  }
 }
 
 void loop(){
+  wdt_reset();
   // Watch Dog Timer will reset the arduino if it doesn't get "wdt_reset();" every 8 sec
-  if ((millis() - previousWdtMillis) > wdtInterval) {
-    previousWdtMillis = millis();
-    wdtInterval = 5000;
-    wdt_reset();
-    Serial.println("wdt reset");
-  }
+//  if ((millis() - previousWdtMillis) > wdtInterval) {
+//    previousWdtMillis = millis();
+//    wdtInterval = 5000;
+//    wdt_reset();
+//    Serial.println("wdt reset");
+//  }
 
   //main function is here, at the moment it will only connect to pachube every 10 sec
   if ((millis() - previousEthernetMillis) > ethernetInterval) {
     previousEthernetMillis = millis();
     ethernetInterval = 10000; //10secs
-    wdt_reset();
-    Serial.println("wdt reset");
+    //wdt_reset();
+    //Serial.println("wdt reset");
     updateLocalSensor();
     useEthernet();    
   }
-
 
   while (reading){ 
     while (client.available()) {

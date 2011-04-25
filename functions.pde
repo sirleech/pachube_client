@@ -14,13 +14,12 @@ void useEthernet(){
   digitalWrite(resetPin,HIGH); // set it back to high
   delay(2000);           
 
-  wdt_reset();
-  Serial.println("wdt reset");
-  Serial.println("Ethernet Begin...");
+  //wdt_reset();
+  //Serial.println("wdt reset");
+  //Serial.println("Ethernet Begin...");
   //int result = EthernetDHCP.begin(mac); 
-  Ethernet.begin(mac, ip, gateway, subnet);
-  wdt_reset();
-  Serial.println("wdt reset");
+  //wdt_reset();
+  //Serial.println("wdt reset");
   //Serial.println("got result...");
   //Serial.println(result);  
   
@@ -62,7 +61,7 @@ void useEthernet(){
     client.print(",");
     client.print(analog2);
     client.print(",");
-    client.print(analog3);
+    client.print(successes);
     Serial.println("data send");    
     client.println();
 
@@ -204,6 +203,3 @@ void stopEthernet(){
   counter = 1;
 
 }
-
-
-

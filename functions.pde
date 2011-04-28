@@ -1,7 +1,7 @@
 void updateLocalSensor(){ 
   
   //define the local sensors here
-  analog0 = analogRead(analogPin0);
+  analog1 = analogRead(analogPin1);
   analog2 = analogRead(analogPin2);
   analog3 = analogRead(analogPin3);  
  
@@ -12,26 +12,29 @@ void useEthernet(){
   digitalWrite(resetPin,LOW); // put reset pin to low ==> reset the ethernet shield
   delay(200);
   digitalWrite(resetPin,HIGH); // set it back to high
-  delay(2000);           
+  delay(2000);                 
 
-  //wdt_reset();
-  //Serial.println("wdt reset");
-  //Serial.println("Ethernet Begin...");
-  //int result = EthernetDHCP.begin(mac); 
-  //wdt_reset();
-  //Serial.println("wdt reset");
-  //Serial.println("got result...");
-  //Serial.println(result);  
-  
-//  if(result == 1){
-//    ipAcquired = true;
-//    Serial.println("ip acquired...");
-//  }
+
+  wdt_reset();
+  Serial.println("wdt reset");
+  Serial.println("getting ip...");
+  int result = EthernetDHCP.begin(mac); 
+  wdt_reset();
+  Serial.println("wdt reset");
+  Serial.println("got result...");
+  Serial.println(result);
+
+
+  if(result == 1){
+    ipAcquired = true;
+    Serial.println("ip acquired...");
+  }
 
   if (client.connect()) {
+
     Serial.println("connected");
-    int content_length = length(analog0) + length(analog2) + length(analog3) + 2 ; 
-    //this line is to count the length of the content = lenght of each local sensor data + ","
+    int content_length = length(analog1) + length(analog2) + length(analog3) + 2 ; 
+    //this line is to count the lenght of the content = lenght of each local sensor data + ","
     //in this case we have 3 data so we will need 2 commas 
 
     client.print("GET /api/feeds/");
@@ -43,7 +46,6 @@ void useEthernet(){
     client.println("User-Agent: Arduino (Natural Fuse v`1.1)");
     client.println();
 
-    //PUT the data from Arduino to Pachube.com
     client.print("PUT /api/feeds/");
     client.print(LOCALFEED);
     client.println(".csv HTTP/1.1");
@@ -57,11 +59,11 @@ void useEthernet(){
     client.println("Connection: close");
     client.println();
 
-    client.print(analog0); //modify local sensors here
+    client.print(analog1); //modify local sensors here
     client.print(",");
     client.print(analog2);
     client.print(",");
-    client.print(successes);
+    client.print(analog3);
     Serial.println("data send");    
     client.println();
 
@@ -70,21 +72,21 @@ void useEthernet(){
 
     successes++;
   } 
-//  if(ipAcquired){
-//    if (!client.connected()) {
-//      Serial.println("but client not connected");
-//
-//      Serial.println();
-//      Serial.println("disconnecting.");
-//
-//      client.stop();
-//      connectedd = false;
-//      ipAcquired = false;
-//      reading = false;
-//      counter ++;
-//
-//    }
-//  }
+  if(ipAcquired){
+    if (!client.connected()) {
+      Serial.println("but client not connected");
+
+      Serial.println();
+      Serial.println("disconnecting.");
+
+      client.stop();
+      connectedd = false;
+      ipAcquired = false;
+      reading = false;
+      counter ++;
+
+    }
+  }
 }
 
 
@@ -126,8 +128,8 @@ void checkForResponse(){
       strncpy (csvLine,buff,strlen(buff)-9);
 
 
-      //Serial.println("\n--- updated: ");
-      //Serial.println(pachube_data);
+      Serial.println("\n--- updated: ");
+      Serial.println(pachube_data);
       Serial.println("\n--- retrieved: ");
       char delims[] = ",";
       char *result = NULL;
@@ -203,3 +205,6 @@ void stopEthernet(){
   counter = 1;
 
 }
+
+
+

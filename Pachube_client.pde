@@ -1,25 +1,34 @@
+/*
+this example for fully function (official)ethernet code for arduino & pachube. 
+including the use of DHCP library, Watchdog timer & manually reset the shield.
+
+hardware note: 
+You will need Arduino Uno
+Freetronics Ethernet Shield
+
+library note: 
+Special thanks to Jordan Terrell(http://blog.jordanterrell.com/) and Georg Kaindl(http://gkaindl.com) for DHCP library
+
+
+*/
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetDHCP.h>
 #include <avr/io.h>
 #include <avr/wdt.h>
 #include <string.h>
-//#include <TrueRandom.h>
 
-#define ID             2    //incase you have more than 1 unit on same network, just change the unit ID to other number
+
+#define ID             1    //incase you have more than 1 unit on same network, just change the unit ID to other number
 #define REMOTEFEED     8281 //remote feed number here, this has to be your own feed
 #define LOCALFEED      8281 //local feed number here
-#define APIKEY         "YOURKEY" // replace your pachube api key here
+#define APIKEY         "APIKEY" // replace your pachube api key here
 
-//An IP address outside the DHCP range
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-//byte ip[] = { 192, 168, 1, 22 };
-//byte ip[] = { 192, 168, 1, 20 };
 
-//gateway = router ip,gateway
-//subnet  = netmask
-//byte gateway[] = { 192, 168, 1, 254 }; 
-//byte subnet[] = { 255, 255, 255, 0 }; 
+
+byte mac[] = { 
+  0xDA, 0xAD, 0xCA, 0xEF, 0xFE,  byte(ID) };
+
 
 byte server [] = {  //www.pachube.com
   173, 203, 98, 29
@@ -41,7 +50,7 @@ boolean found_content = false;
 int content_length;
 int successes = 0;
 int failures = 0;
-int counter = 0;
+int counter = 1;
 Client client(server, 80);
 
 //timer variables
@@ -51,12 +60,12 @@ long previousEthernetMillis = 0;
 long ethernetInterval = 0;
 
 // variable to store local sensors
-int analog0 = 0;
+int analog1 = 0;
 int analog2 = 0;
 int analog3 = 0;
 
 //define analog pins for sensors
-int analogPin0 = 0;    
+int analogPin1 = 0;    
 int analogPin2 = 2;
 int analogPin3 = 5;
 
@@ -66,43 +75,37 @@ int resetPin = 9; //reset pin to manually reset the ethernet shield
 // variable to store the value coming from the sensor
 int remote1 = 0; 
 int remote2 = 0;
-int remote3 = 0;
+int remote3 = 3;
 
 void setup(){
   MCUSR=0;
   wdt_enable(WDTO_8S); // setup Watch Dog Timer to 8 sec
   pinMode(resetPin,OUTPUT);
   Serial.begin(9600);
-  //Ethernet.begin(mac, ip, gateway, subnet);
-  Serial.println("Setup...");
-  //TrueRandom.mac(mac);
-  Serial.println("Ethernet Begin...");
-  int result = EthernetDHCP.begin(mac); 
-  if(result == 1){
-    ipAcquired = true;
-    Serial.println("ip acquired...");
-  }
+  Serial.println("restarted");
+
 }
 
 void loop(){
-  wdt_reset();
+
   // Watch Dog Timer will reset the arduino if it doesn't get "wdt_reset();" every 8 sec
-//  if ((millis() - previousWdtMillis) > wdtInterval) {
-//    previousWdtMillis = millis();
-//    wdtInterval = 5000;
-//    wdt_reset();
-//    Serial.println("wdt reset");
-//  }
+  if ((millis() - previousWdtMillis) > wdtInterval) {
+    previousWdtMillis = millis();
+    wdtInterval = 5000;
+    wdt_reset();
+    Serial.println("wdt reset");
+  }
 
   //main function is here, at the moment it will only connect to pachube every 10 sec
   if ((millis() - previousEthernetMillis) > ethernetInterval) {
     previousEthernetMillis = millis();
-    ethernetInterval = 10000; //10secs
-    //wdt_reset();
-    //Serial.println("wdt reset");
+    ethernetInterval = 10000; //10 sec
+    wdt_reset();
+    Serial.println("wdt reset");
     updateLocalSensor();
-    useEthernet();    
+    useEthernet();
   }
+
 
   while (reading){ 
     while (client.available()) {
@@ -110,3 +113,36 @@ void loop(){
     } 
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

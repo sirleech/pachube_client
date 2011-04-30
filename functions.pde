@@ -63,7 +63,7 @@ void useEthernet(){
     client.print(",");
     client.print(analog2);
     client.print(",");
-    client.print(analog3);
+    client.print(successes);
     Serial.println("data send");    
     client.println();
 

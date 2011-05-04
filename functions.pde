@@ -17,7 +17,9 @@ void useEthernet(){
 
   wdt_reset();
   Serial.println("wdt reset");
-  Serial.println("getting ip...");
+  Serial.print("getting ip...mac id=");
+  Serial.print(ID);
+  Serial.println("");
   int result = EthernetDHCP.begin(mac); 
   wdt_reset();
   Serial.println("wdt reset");

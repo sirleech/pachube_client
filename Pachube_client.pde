@@ -22,7 +22,7 @@ Special thanks to Jordan Terrell(http://blog.jordanterrell.com/) and Georg Kaind
 //#define ID             1    //incase you have more than 1 unit on same network, just change the unit ID to other number
 #define REMOTEFEED     8281 //remote feed number here, this has to be your own feed
 #define LOCALFEED      8281 //local feed number here
-#define APIKEY         "API" // replace your pachube api key here
+#define APIKEY         "KEY" // replace your pachube api key here
 
 
 byte server [] = {  //www.pachube.com
@@ -65,6 +65,7 @@ int analogPin2 = 2;
 int analogPin3 = 5;
 
 byte mac[6];
+int ID;
 
 //digital out
 int resetPin = 9; //reset pin to manually reset the ethernet shield
@@ -81,7 +82,8 @@ void setup(){
   Serial.begin(9600);
   Serial.println("restarted");
   
-  int ID = random(1, 2);
+  randomSeed(analogRead(1));
+  ID = random(1, 10);
   mac[0] = 0xDA;
   mac[1] = 0xAD;
   mac[2] = 0xCA;

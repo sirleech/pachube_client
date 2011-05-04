@@ -2,7 +2,7 @@ An Arduino Ethernet datalogger sending a feed to Pachube.com. The internal watch
 http://community.pachube.com/arduino/ethernet/watchdog
 
 Hardware note: 
-**************
+--------------
 You will need 
 Arduino Uno (with Optiboot bootloader)
 Freetronics Ethernet Shield
@@ -12,7 +12,7 @@ Optional Hardware Mod:
 Jumper is added to Pin 9 and soldered to the WIZ_RST pad of the Ethernet Shield
 
 Software note:
-**************
+--------------
 
 - Arduino IDE 0021
 

@@ -3,28 +3,20 @@ http://community.pachube.com/arduino/ethernet/watchdog
 
 Hardware note: 
 --------------
-You will need 
-Arduino Uno (with Optiboot bootloader)
-Freetronics Ethernet Shield
 
-Optional Hardware Mod:
-> int resetPin = 9; //reset pin to manually reset the ethernet shield
-Jumper is added to Pin 9 and soldered to the WIZ_RST pad of the Ethernet Shield
+Arduino Uno (with Optiboot bootloader)
+Arduino Ethernet Shield or Freetronics Ethernet Shield (Wiznet 5100)
 
 Software note:
 --------------
 
 - Arduino IDE 0021
 
-Optional Libraries:
+Required Libraries:
 - EthernetDHCP.h Library 1.0b4
   -- http://gkaindl.com/software/arduino-ethernet/dhcp/
   -- or https://github.com/sirleech/ArduinoEthernetDHCP_1.0b4
   
-- TrueRandom.h Library
-  -- http://code.google.com/p/tinkerit/wiki/TrueRandom
-  -- or https://github.com/sirleech/TrueRandom
- 
 
 Libraries note: 
 --------------
